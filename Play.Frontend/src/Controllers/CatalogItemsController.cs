@@ -24,7 +24,7 @@ namespace Play.Frontend.Controllers
         // GET: CatalogItems
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
+            using var client = _httpClientFactory.CreateClient();
             var response = await client.GetAsync($"{_baseUrl}/items");
 
             if (response.IsSuccessStatusCode)
@@ -42,7 +42,7 @@ namespace Play.Frontend.Controllers
         {
             if (id == null) return NotFound();
 
-            var client = _httpClientFactory.CreateClient();
+            using var client = _httpClientFactory.CreateClient();
             var response = await client.GetAsync($"{_baseUrl}/items/{id}");
 
             if (response.IsSuccessStatusCode)
@@ -70,7 +70,7 @@ namespace Play.Frontend.Controllers
         {
             if (ModelState.IsValid)
             {
-                var client = _httpClientFactory.CreateClient();
+                using var client = _httpClientFactory.CreateClient();
 
                 var response = await client.PostAsJsonAsync($"{_baseUrl}/items", createItemDto);
 
@@ -84,7 +84,7 @@ namespace Play.Frontend.Controllers
         {
             if (id == null) return NotFound();
 
-            var client = _httpClientFactory.CreateClient();
+            using var client = _httpClientFactory.CreateClient();
             var response = await client.GetAsync($"{_baseUrl}/items/{id}");
 
             if (response.IsSuccessStatusCode)
@@ -107,7 +107,7 @@ namespace Play.Frontend.Controllers
         {
             if (ModelState.IsValid)
             {
-                var client = _httpClientFactory.CreateClient();
+                using var client = _httpClientFactory.CreateClient();
                 var response = await client.PutAsJsonAsync($"{_baseUrl}/items/{id}", updateItemDto);
 
                 return RedirectToAction(nameof(Index));
@@ -120,7 +120,7 @@ namespace Play.Frontend.Controllers
         {
             if (id == null) return NotFound();
 
-            var client = _httpClientFactory.CreateClient();
+            using var client = _httpClientFactory.CreateClient();
             var response = await client.GetAsync($"{_baseUrl}/items/{id}");
 
             if (response.IsSuccessStatusCode)
@@ -139,7 +139,7 @@ namespace Play.Frontend.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var client = _httpClientFactory.CreateClient();
+            using var client = _httpClientFactory.CreateClient();
             var response = await client.DeleteAsync($"{_baseUrl}/items/{id}");
 
             return RedirectToAction(nameof(Index));
